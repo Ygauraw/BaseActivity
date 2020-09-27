@@ -1,4 +1,4 @@
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     public static final String TAG = BaseActivity.class.getSimpleName();
     protected ProgressBar mProgressBar;
@@ -22,10 +22,34 @@ public class BaseActivity extends AppCompatActivity {
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 
         layout.addView(relativeLayout, relativelayoutParams);
+
     }
 
     protected void showLoading(boolean visibility) {
         mProgressBar.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
     }
 
+    public abstract void initiliazeViews();
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void startActivity(Context context, Class<? extends AppCompatActivity> targetActivity) {
+        Intent intent = new Intent(this, targetActivity);
+        startActivity(intent);
+    }
+
+    public void startActivity(Context context, Class<? extends AppCompatActivity> targetActivity, Bundle bundle) {
+        Intent intent = new Intent(this, targetActivity);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void startActivity(Context context, Class<? extends AppCompatActivity> targetActivity, int flag) {
+        Intent intent = new Intent(this, targetActivity);
+        intent.setFlags(flag);
+        startActivity(intent);
+    }
 }
